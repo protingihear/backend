@@ -9,11 +9,14 @@ class CreateKomunitasTable extends Migration
     public function up()
     {
         Schema::create('komunitas', function (Blueprint $table) {
-            $table->id('idKomunitas');
-            $table->string('namaKomunitas', 256);
-            $table->foreignId('idTemanTuli')->constrained('teman_tuli')->onDelete('cascade');
-            $table->foreignId('idTemanDengar')->constrained('teman_dengar')->onDelete('cascade');
-            $table->timestamps();
+            $table->id('idKomunitas'); // Primary Key
+    $table->string('namaKomunitas', 256);
+    $table->unsignedBigInteger('idTemanTuli'); // Foreign Key
+    $table->unsignedBigInteger('idTemanDengar'); // Foreign Key
+    $table->timestamps();
+
+    $table->foreign('idTemanTuli')->references('idTemanTuli')->on('teman_tuli')->onDelete('cascade');
+    $table->foreign('idTemanDengar')->references('idTemanDengar')->on('teman_dengar')->onDelete('cascade'); 
         });
     }
 

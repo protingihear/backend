@@ -9,12 +9,16 @@ class CreateKomentarTable extends Migration
     public function up()
     {
         Schema::create('komentar', function (Blueprint $table) {
-            $table->id('idKomentar');
-            $table->string('isiKomentar', 255);
-            $table->foreignId('idKomunitas')->constrained('komunitas')->onDelete('cascade');
-            $table->foreignId('idTemanTuli')->constrained('teman_tuli')->onDelete('cascade');
-            $table->foreignId('idTemanDengar')->constrained('teman_dengar')->onDelete('cascade');
-            $table->timestamps();
+          $table->id('idKomentar'); // Primary Key
+    $table->string('isiKomentar', 255);
+    $table->unsignedBigInteger('idKomunitas'); // Foreign Key
+    $table->unsignedBigInteger('idTemanTuli'); // Foreign Key
+    $table->unsignedBigInteger('idTemanDengar'); // Foreign Key
+    $table->timestamps();
+
+    $table->foreign('idKomunitas')->references('idKomunitas')->on('komunitas')->onDelete('cascade');
+    $table->foreign('idTemanTuli')->references('idTemanTuli')->on('teman_tuli')->onDelete('cascade');
+    $table->foreign('idTemanDengar')->references('idTemanDengar')->on('teman_dengar')->onDelete('cascade'); 
         });
     }
 

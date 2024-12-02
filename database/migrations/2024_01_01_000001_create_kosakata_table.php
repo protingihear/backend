@@ -9,11 +9,13 @@ class CreateKosakataTable extends Migration
     public function up()
     {
         Schema::create('kosakata', function (Blueprint $table) {
+        
             $table->id('idKata');
-            $table->string('kata', 256);
-            $table->string('artiKata', 256);
-            $table->foreignId('idAhliBahasa')->constrained('ahli_bahasa')->onDelete('cascade');
-            $table->timestamps();
+    $table->string('kata', 256);
+    $table->string('artiKata', 256);
+    $table->unsignedBigInteger('idAhliBahasa'); // Foreign Key
+    $table->foreign('idAhliBahasa')->references('idAhliBahasa')->on('ahli_bahasa')->onDelete('cascade');
+    $table->timestamps();
         });
     }
 
