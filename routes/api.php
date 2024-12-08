@@ -1,42 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\{AhliBahasa, Kosakata, TemanTuli, TemanDengar, Komunitas, Komentar};
+use App\Http\Controllers\{
+    AhliBahasaController,
+    KosakataController,
+    TemanTuliController,
+    TemanDengarController,
+    KomunitasController,
+    KomentarController
+};
 
 Route::prefix('api')->group(function () {
-    // CRUD routes for AhliBahasa
-    Route::get('/ahli-bahasa', fn() => AhliBahasa::all());
-    Route::post('/ahli-bahasa', fn() => AhliBahasa::create(request()->all()));
-    Route::put('/ahli-bahasa/{id}', fn($id) => AhliBahasa::find($id)->update(request()->all()));
-    Route::delete('/ahli-bahasa/{id}', fn($id) => AhliBahasa::destroy($id));
+    // Routes for AhliBahasa
+    Route::apiResource('ahli-bahasa', AhliBahasaController::class);
 
-    // CRUD routes for Kosakata
-    Route::get('/kosakata', fn() => Kosakata::all());
-    Route::post('/kosakata', fn() => Kosakata::create(request()->all()));
-    Route::put('/kosakata/{id}', fn($id) => Kosakata::find($id)->update(request()->all()));
-    Route::delete('/kosakata/{id}', fn($id) => Kosakata::destroy($id));
+    // Routes for Kosakata
+    Route::apiResource('kosakata', KosakataController::class);
 
-    // CRUD routes for TemanTuli
-    Route::get('/teman-tuli', fn() => TemanTuli::all());
-    Route::post('/teman-tuli', fn() => TemanTuli::create(request()->all()));
-    Route::put('/teman-tuli/{id}', fn($id) => TemanTuli::find($id)->update(request()->all()));
-    Route::delete('/teman-tuli/{id}', fn($id) => TemanTuli::destroy($id));
+    // Routes for TemanTuli
+    Route::apiResource('teman-tuli', TemanTuliController::class);
 
-    // CRUD routes for TemanDengar
-    Route::get('/teman-dengar', fn() => TemanDengar::all());
-    Route::post('/teman-dengar', fn() => TemanDengar::create(request()->all()));
-    Route::put('/teman-dengar/{id}', fn($id) => TemanDengar::find($id)->update(request()->all()));
-    Route::delete('/teman-dengar/{id}', fn($id) => TemanDengar::destroy($id));
+    // Routes for TemanDengar
+    Route::apiResource('teman-dengar', TemanDengarController::class);
 
-    // CRUD routes for Komunitas
-    Route::get('/komunitas', fn() => Komunitas::all());
-    Route::post('/komunitas', fn() => Komunitas::create(request()->all()));
-    Route::put('/komunitas/{id}', fn($id) => Komunitas::find($id)->update(request()->all()));
-    Route::delete('/komunitas/{id}', fn($id) => Komunitas::destroy($id));
+    // Routes for Komunitas
+    Route::apiResource('komunitas', KomunitasController::class);
 
-    // CRUD routes for Komentar
-    Route::get('/komentar', fn() => Komentar::all());
-    Route::post('/komentar', fn() => Komentar::create(request()->all()));
-    Route::put('/komentar/{id}', fn($id) => Komentar::find($id)->update(request()->all()));
-    Route::delete('/komentar/{id}', fn($id) => Komentar::destroy($id));
+    // Routes for Komentar
+    Route::apiResource('komentar', KomentarController::class);
 });
