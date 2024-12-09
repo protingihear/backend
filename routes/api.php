@@ -26,4 +26,5 @@ Route::middleware([HandleCors::class])->group(function () {
     Route::apiResource('teman-dengar', TemanDengarController::class);
     Route::apiResource('komunitas', KomunitasController::class);
     Route::apiResource('komentar', KomentarController::class);
+    Route::get('/auth', [TemanTuliController::class, 'authenticate']);
 });
