@@ -14,13 +14,19 @@ class TemanTuliController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|unique:teman_tuli,email',
-            'firstName' => 'required|string|max:256',
-            'lastName' => 'required|string|max:256',
-            'username' => 'required|string|max:255|unique:teman_tuli,username',
-            'password' => 'required|string|min:8',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'email' => 'required|email|unique:teman_tuli,email',
+                'firstName' => 'required|string|max:256',
+                'lastName' => 'required|string|max:256',
+                'username' => 'required|string|max:255|unique:teman_tuli,username',
+                'password' => 'required|string|min:8',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error($e->errors()); // Log detail error ke file log
+            return response()->json(['errors' => $e->errors()], 422);
+        }
+        
         return TemanTuli::create($request->all());
     }
 

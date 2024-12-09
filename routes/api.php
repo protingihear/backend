@@ -10,16 +10,20 @@ use App\Http\Controllers\{
     KomunitasController,
     KomentarController
 };
+use Illuminate\Http\Middleware\HandleCors; // Import Middleware CORS
 
-// Rute untuk user dengan middleware auth:sanctum
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Terapkan Middleware CORS untuk semua rute
+Route::middleware([HandleCors::class])->group(function () {
+    // Rute untuk user dengan middleware auth:sanctum
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    })->middleware('auth:sanctum');
 
-// Menghapus prefix 'api' dan mendefinisikan rute langsung
-Route::apiResource('ahli-bahasa', AhliBahasaController::class);
-Route::apiResource('kosakata', KosakataController::class);
-Route::apiResource('teman-tuli', TemanTuliController::class);
-Route::apiResource('teman-dengar', TemanDengarController::class);
-Route::apiResource('komunitas', KomunitasController::class);
-Route::apiResource('komentar', KomentarController::class);
+    // Semua rute lainnya
+    Route::apiResource('ahli-bahasa', AhliBahasaController::class);
+    Route::apiResource('kosakata', KosakataController::class);
+    Route::apiResource('teman-tuli', TemanTuliController::class);
+    Route::apiResource('teman-dengar', TemanDengarController::class);
+    Route::apiResource('komunitas', KomunitasController::class);
+    Route::apiResource('komentar', KomentarController::class);
+});
