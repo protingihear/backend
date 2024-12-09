@@ -11,27 +11,15 @@ use App\Http\Controllers\{
     KomentarController
 };
 
-
+// Rute untuk user dengan middleware auth:sanctum
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::prefix('api')->group(function () {
-    // Routes for AhliBahasa
-    Route::apiResource('ahli-bahasa', AhliBahasaController::class);
-
-    // Routes for Kosakata
-    Route::apiResource('kosakata', KosakataController::class);
-
-    // Routes for TemanTuli
-    Route::apiResource('teman-tuli', TemanTuliController::class);
-
-    // Routes for TemanDengar
-    Route::apiResource('teman-dengar', TemanDengarController::class);
-
-    // Routes for Komunitas
-    Route::apiResource('komunitas', KomunitasController::class);
-
-    // Routes for Komentar
-    Route::apiResource('komentar', KomentarController::class);
-});
+// Menghapus prefix 'api' dan mendefinisikan rute langsung
+Route::apiResource('ahli-bahasa', AhliBahasaController::class);
+Route::apiResource('kosakata', KosakataController::class);
+Route::apiResource('teman-tuli', TemanTuliController::class);
+Route::apiResource('teman-dengar', TemanDengarController::class);
+Route::apiResource('komunitas', KomunitasController::class);
+Route::apiResource('komentar', KomentarController::class);
