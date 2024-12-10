@@ -61,13 +61,12 @@ class TemanTuliController extends Controller
         $email = $request->query('email');
         $password = $request->query('password');
 
-        // Cek data di database
         $user = TemanTuli::where('email', $email)->first();
 
-        if ($user && $user->password === $password) { // Cocokkan password secara langsung (tidak disarankan tanpa hashing)
+        if ($user && $user->password === $password) {
             return response()->json([
                 'message' => 'Login berhasil!',
-                'user' => $user,
+                'userId' => $user->idTemanTuli, // Kirimkan ID user
             ], 200);
         }
 
@@ -75,5 +74,6 @@ class TemanTuliController extends Controller
             'message' => 'Email atau password salah.',
         ], 401);
     }
+
     
 }
