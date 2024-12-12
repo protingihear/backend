@@ -11,5 +11,5 @@ class TemanDengar extends Model
 
     protected $table = 'teman_dengar';
     protected $primaryKey = 'idTemanDengar';
-    protected $fillable = ['email', 'firstName', 'lastName', 'username', 'password', 'bio'];
+    protected $fillable = ['email', 'firstName', 'lastName', 'username', 'password', 'bio','picture'];
 }

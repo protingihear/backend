@@ -11,5 +11,5 @@ class AhliBahasa extends Model
 
     protected $table = 'ahli_bahasa';
     protected $primaryKey = 'idAhliBahasa';
-    protected $fillable = ['firstName', 'lastName', 'username', 'password'];
+    protected $fillable = ['firstName', 'lastName', 'username', 'password','picture'];
 }

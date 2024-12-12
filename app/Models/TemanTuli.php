@@ -11,5 +11,5 @@ class TemanTuli extends Model
 
     protected $table = 'teman_tuli';
     protected $primaryKey = 'idTemanTuli';
-    protected $fillable = ['email', 'firstName', 'lastName', 'username', 'password', 'bio'];
+    protected $fillable = ['email', 'firstName', 'lastName', 'username', 'password', 'bio','picture'];
 }

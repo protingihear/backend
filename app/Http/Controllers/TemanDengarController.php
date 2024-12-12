@@ -20,6 +20,7 @@ class TemanDengarController extends Controller
             'lastName' => 'required|string|max:256',
             'username' => 'required|string|max:255|unique:teman_dengar,username',
             'password' => 'required|string|min:8',
+             'picture' => 'nullable|image|max:2048',
         ]);
         return TemanDengar::create($request->all());
     }

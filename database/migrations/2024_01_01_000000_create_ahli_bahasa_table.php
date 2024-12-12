@@ -14,6 +14,7 @@ class CreateAhliBahasaTable extends Migration
             $table->string('lastName', 256);
             $table->string('username', 255)->unique();
             $table->string('password', 255);
+            $table->string('picture', 512)->nullable();
             $table->timestamps();
         });
     }
