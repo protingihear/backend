@@ -27,9 +27,16 @@ class TemanTuliController extends Controller
             \Log::error($e->errors()); // Log detail error ke file log
             return response()->json(['errors' => $e->errors()], 422);
         }
-        
-        return TemanTuli::create($request->all());
+
+        // Simpan data ke database tanpa hashing password
+        $temanTuli = TemanTuli::create($validatedData);
+
+        return response()->json([
+            'message' => 'Data berhasil disimpan',
+            'data' => $temanTuli
+        ], 201);
     }
+
 
     public function show($id)
     {
@@ -48,4 +55,25 @@ class TemanTuliController extends Controller
         TemanTuli::destroy($id);
         return response()->json(['message' => 'TemanTuli deleted successfully']);
     }
+
+    public function authenticate(Request $request)
+    {
+        $email = $request->query('email');
+        $password = $request->query('password');
+
+        $user = TemanTuli::where('email', $email)->first();
+
+        if ($user && $user->password === $password) {
+            return response()->json([
+                'message' => 'Login berhasil!',
+                'userId' => $user->idTemanTuli, // Kirimkan ID user
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Email atau password salah.',
+        ], 401);
+    }
+
+    
 }
