@@ -21,7 +21,8 @@ class TemanTuliController extends Controller
                 'lastName' => 'required|string|max:256',
                 'username' => 'required|string|max:255|unique:teman_tuli,username',
                 'password' => 'required|string|min:8',
-                 'picture' => 'nullable|image|max:2048',
+                'picture' => 'nullable|image|max:2048',
+                'gender' => 'required|in:P,L',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             \Log::error($e->errors()); // Log detail error ke file log
