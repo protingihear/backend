@@ -17,7 +17,7 @@ class CreateTemanTuliTable extends Migration
             $table->string('password', 255);
             $table->string('bio', 255)->nullable();
             $table->string('picture', 512)->nullable();
-            $table->enum('gender', ['P', 'L'])->default('L');
+            $table->enum('gender', ['L', 'P'])->comment('L: Laki, P: Perempuan');
             $table->timestamps();
         });
     }

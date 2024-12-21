@@ -27,4 +27,8 @@ Route::middleware([HandleCors::class])->group(function () {
     Route::apiResource('komunitas', KomunitasController::class);
     Route::apiResource('komentar', KomentarController::class);
     Route::get('/auth', [TemanTuliController::class, 'authenticate']);
+    Route::post('/teman-tuli/{id}/update', [TemanTuliController::class, 'update']);
+
+
+
 });
