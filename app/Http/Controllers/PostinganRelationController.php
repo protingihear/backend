@@ -87,19 +87,19 @@ class PostinganRelationController extends Controller
                 'kontenPostingan' => 'nullable|string',
                 'likes' => 'nullable|integer',
                 'comments' => 'nullable|integer',
-                'image' => 'nullable|image|max:2048',
+                'image' => 'nullable|string|max:2048',
                 'username' => 'nullable|string|exists:teman_tuli,username',
             ]);
 
-            if ($request->hasFile('image') && $request->file('image')->isValid()) {
-                $path = $request->file('image')->store('post-images', 'public');
+            // if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            //     $path = $request->file('image')->store('post-images', 'public');
 
-                if ($postingan->image) {
-                    \Storage::disk('public')->delete($postingan->image);
-                }
+            //     if ($postingan->image) {
+            //         \Storage::disk('public')->delete($postingan->image);
+            //     }
 
-                $validatedData['image'] = $path;
-            }
+            //     $validatedData['image'] = $path;
+            // }
 
             $postingan->update($validatedData);
 
