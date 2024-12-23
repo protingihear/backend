@@ -8,7 +8,8 @@ use App\Http\Controllers\{
     TemanTuliController,
     TemanDengarController,
     KomunitasController,
-    KomentarController
+    KomentarController,
+    PostinganRelationController
 };
 use Illuminate\Http\Middleware\HandleCors; // Import Middleware CORS
 
@@ -26,6 +27,7 @@ Route::middleware([HandleCors::class])->group(function () {
     Route::apiResource('teman-dengar', TemanDengarController::class);
     Route::apiResource('komunitas', KomunitasController::class);
     Route::apiResource('komentar', KomentarController::class);
+    Route::apiResource('postingan', PostinganRelationController::class);
     Route::get('/auth', [TemanTuliController::class, 'authenticate']);
     Route::post('/teman-tuli/{id}/update', [TemanTuliController::class, 'update']);
 

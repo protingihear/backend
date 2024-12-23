@@ -12,7 +12,9 @@ return new class extends Migration
     public function up()
 {
     Schema::table('teman_tuli', function (Blueprint $table) {
-        $table->enum('gender', ['L', 'P'])->comment('L: Laki, P: Perempuan')->after('picture');
+        if (!Schema::hasColumn('teman_tuli', 'gender')) {
+            $table->enum('gender', ['L', 'P'])->comment('L: Laki, P: Perempuan')->after('picture');
+        }
     });
 }
 
