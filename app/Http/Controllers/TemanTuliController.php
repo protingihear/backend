@@ -133,14 +133,10 @@ class TemanTuliController extends Controller
 
         $user = TemanTuli::where('email', $email)->first();
 
-        if ($user && Hash::check($password, $user->password)) {
+        if ($user && $user->password === $password) {
             return response()->json([
                 'message' => 'Login berhasil!',
-                'user' => [
-                    'id' => $user->idTemanTuli,
-                    'firstName' => $user->firstName,
-                    'lastName' => $user->lastName,
-                ]
+                'userId' => $user->idTemanTuli, // Kirimkan ID user
             ], 200);
         }
 
