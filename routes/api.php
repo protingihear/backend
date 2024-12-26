@@ -30,6 +30,8 @@ Route::middleware([HandleCors::class])->group(function () {
     Route::apiResource('komentar', KomentarController::class);
     Route::apiResource('postingan', PostinganRelationController::class);
     Route::apiResource('transkrip', TranskripController::class);
+
+Route::get('/transkrip/nomer/{nomer}', [TranskripController::class, 'searchByNomer']);
     Route::get('/auth', [TemanTuliController::class, 'authenticate']);
 
     Route::post('/teman-tuli/{id}/update', [TemanTuliController::class, 'update']);

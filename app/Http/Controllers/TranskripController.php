@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transkrip;
 use Illuminate\Http\Request;
-use App\Models\Transkrip;   
+
 class TranskripController extends Controller
 {
-       // Menampilkan semua transkrip
+    // Menampilkan semua transkrip
     public function index()
     {
         $transkrips = Transkrip::all();
@@ -17,7 +18,7 @@ class TranskripController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nomer' => 'required|unique:transkrips',
+            'nomer' => 'required', // Nomor tidak perlu unik
             'transkrip' => 'required',
         ]);
 
@@ -37,6 +38,18 @@ class TranskripController extends Controller
         return response()->json($transkrip);
     }
 
+    // Mencari transkrip berdasarkan nomor tertentu
+    public function searchByNomer($nomer)
+    {
+        $transkrips = Transkrip::where('nomer', $nomer)->get();
+
+        if ($transkrips->isEmpty()) {
+            return response()->json(['message' => 'Transkrip tidak ditemukan'], 404);
+        }
+
+        return response()->json($transkrips);
+    }
+
     // Memperbarui data
     public function update(Request $request, $id)
     {
@@ -47,7 +60,7 @@ class TranskripController extends Controller
         }
 
         $request->validate([
-            'nomer' => 'required|unique:transkrips,nomer,' . $id,
+            'nomer' => 'required',
             'transkrip' => 'required',
         ]);
 
