@@ -30,14 +30,15 @@ class PostinganRelationController extends Controller
                 'kontenPostingan' => 'required|string',
                 'likes' => 'nullable|integer',
                 'comments' => 'nullable|integer',
-                'image' => 'nullable|string|max:2048',
-                'username' => 'required|string|exists:teman_tuli,username', // Validasi foreign key
+                'image' => 'nullable|image|max:2048', // Validasi file gambar
+                'username' => 'required|string|max:2048',
             ]);
 
-            // if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            //     $path = $request->file('image')->store('post-images', 'public');
-            //     $validatedData['image'] = $path;
-            // }
+            // Upload gambar jika ada
+            if ($request->hasFile('image') && $request->file('image')->isValid()) {
+                $path = $request->file('image')->store('post-images', 'public'); // Simpan di folder "post-images" dalam storage/public
+                $validatedData['image'] = $path;
+            }
 
             $postingan = PostinganRelation::create($validatedData);
 
@@ -49,6 +50,7 @@ class PostinganRelationController extends Controller
             return response()->json(['errors' => $e->errors()], 422);
         }
     }
+
 
     /**
      * Menampilkan detail postingan.
@@ -88,7 +90,7 @@ class PostinganRelationController extends Controller
                 'likes' => 'nullable|integer',
                 'comments' => 'nullable|integer',
                 'image' => 'nullable|string|max:2048',
-                'username' => 'nullable|string|exists:teman_tuli,username',
+                'username' => 'nullable|string|max:2048',
             ]);
 
             // if ($request->hasFile('image') && $request->file('image')->isValid()) {

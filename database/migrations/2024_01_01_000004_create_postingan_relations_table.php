@@ -18,8 +18,6 @@ return new class extends Migration
             $table->integer('comments')->default(0); // Jumlah komentar
             $table->string('image')->nullable(); // Gambar dalam postingan
             $table->string('username'); // Nama pengguna dari tabel teman_tuli
-            // $table->unsignedBigInteger('dari_idTemanTuli'); // Foreign key ke tabel teman_tuli
-            // $table->unsignedBigInteger('dari_idTemanDengar'); // Foreign key ke tabel teman_dengar
             $table->timestamps();
             $table->softDeletes();
         
