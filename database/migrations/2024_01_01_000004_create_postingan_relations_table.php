@@ -20,17 +20,6 @@ return new class extends Migration
             $table->string('username'); // Nama pengguna dari tabel teman_tuli
             $table->timestamps();
             $table->softDeletes();
-        
-            // Definisi foreign key
-            // $table->foreign('username')
-            //       ->references('username') // Pastikan kolom id pada teman_tuli ada
-            //       ->on('teman_tuli')
-            //       ->onDelete('cascade');
-        
-            // $table->foreign('dari_idTemanDengar')
-            //       ->references('idTemanDengar') // Pastikan kolom id pada teman_dengar ada
-            //       ->on('teman_dengar')
-            //       ->onDelete('cascade');
         });
     }
 

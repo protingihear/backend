@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\PostinganRelation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\PostinganUserLike;
 
 class PostinganRelationController extends Controller
 {
@@ -131,5 +133,81 @@ class PostinganRelationController extends Controller
         $postingan->delete();
 
         return response()->json(['message' => 'Postingan berhasil dihapus']);
+    }
+
+    /**
+     * Menambah jumlah likes pada postingan.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function likePost($id)
+    {
+        $postingan = PostinganRelation::find($id);
+
+        if (!$postingan) {
+            return response()->json(['message' => 'Postingan tidak ditemukan'], 404);
+        }
+
+        $postingan->increment('likes'); // Menambah jumlah likes +1
+        $postingan->save();
+
+        return response()->json([
+            'message' => 'Post liked successfully',
+            'likes' => $postingan->likes,
+        ]);
+    }
+
+    /**
+     * Fungsi untuk toggle like/unlike pada postingan.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toggleLike(Request $request, $id)
+    {
+        // Validasi input dari frontend
+        $request->validate([
+            'userId' => 'required|integer', // Pastikan userId adalah angka
+        ]);
+
+        $userId = $request->input('userId'); // Ambil userId dari request
+
+        // Cek apakah user sudah memberikan like pada postingan ini
+        $like = PostinganUserLike::where('ttl_id', $userId)
+            ->where('postingan_id', $id)
+            ->first();
+
+        // Cari postingan terkait
+        $postingan = PostinganRelation::findOrFail($id);
+
+        if ($like) {
+            // Jika sudah di-like, maka hapus (unlike)
+            $like->delete();
+
+            // Kurangi jumlah likes di tabel postingan_relations
+            $postingan->decrement('likes');
+
+            return response()->json([
+                'status' => 'unliked',
+                'message' => 'Unlike successful',
+                'likes' => $postingan->likes // Kirim jumlah likes terbaru
+            ]);
+        }
+
+        // Jika belum di-like, tambahkan like
+        PostinganUserLike::create([
+            'ttl_id' => $userId,
+            'postingan_id' => $id,
+        ]);
+
+        // Tambah jumlah likes di tabel postingan_relations
+        $postingan->increment('likes');
+
+        return response()->json([
+            'status' => 'liked',
+            'message' => 'Like successful',
+            'likes' => $postingan->likes // Kirim jumlah likes terbaru
+        ]);
     }
 }

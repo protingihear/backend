@@ -49,4 +49,9 @@ class PostinganRelation extends Model
     {
         return $this->belongsTo(TemanTuli::class, 'username', 'username');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(PostinganUserLike::class, 'postingan_id');
+    }
 }
