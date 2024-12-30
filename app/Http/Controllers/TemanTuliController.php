@@ -97,10 +97,6 @@ class TemanTuliController extends Controller
             $validatedData['picture'] = $path;
         }
 
-        if (!empty($validatedData['password'])) {
-            $validatedData['password'] = bcrypt($validatedData['password']);
-        }
-
         try {
             $temanTuli->fill($validatedData);
             $temanTuli->save();
