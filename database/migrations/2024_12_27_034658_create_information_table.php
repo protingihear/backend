@@ -9,15 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    //1. tambah tabel image disini
     public function up(): void
     {
         Schema::create('information', function (Blueprint $table) {
             $table->id();
-                  $table->string('source')->nullable();
+            $table->string('source')->nullable();
             $table->date('upload_date')->nullable();
             $table->time('upload_time')->nullable();
             $table->string('title');
             $table->text('content');
+            $table->string('image')->nullable(); // Kolom untuk menyimpan nama atau path gambar
             $table->timestamps();
         });
     }
