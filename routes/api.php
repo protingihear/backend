@@ -40,5 +40,6 @@ Route::get('/transkrip/nomer/{nomer}', [TranskripController::class, 'searchByNom
     // Route::post('/postingan/{id}/like', [PostinganRelationController::class, 'likePost']);
     // Route::post('/postingan/{id}/like', [PostinganRelationController::class, 'toggleLike']);
     Route::post('/postingan/toggle-like/{id}', [PostinganRelationController::class, 'toggleLike']);
-
+    Route::delete('/postingan/{id}', [PostinganRelationController::class, 'destroy']);
+    Route::put('/postingan/{id}/update', [PostinganRelationController::class, 'update']);
 });

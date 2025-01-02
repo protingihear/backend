@@ -6,6 +6,7 @@ use App\Models\PostinganRelation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PostinganUserLike;
+use Illuminate\Support\Facades\Storage;
 
 class PostinganRelationController extends Controller
 {
@@ -78,41 +79,70 @@ class PostinganRelationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
+    // public function update(Request $request, $id)
+    // {
+    //     $postingan = PostinganRelation::find($id);
+
+    //     if (!$postingan) {
+    //         return response()->json(['message' => 'Postingan tidak ditemukan'], 404);
+    //     }
+
+    //     try {
+    //         $validatedData = $request->validate([
+    //             'kontenPostingan' => 'nullable|string',
+    //             'likes' => 'nullable|integer',
+    //             'comments' => 'nullable|integer',
+    //             'image' => 'nullable|string|max:2048',
+    //             'username' => 'nullable|string|max:2048',
+    //         ]);
+
+    //         // if ($request->hasFile('image') && $request->file('image')->isValid()) {
+    //         //     $path = $request->file('image')->store('post-images', 'public');
+
+    //         //     if ($postingan->image) {
+    //         //         \Storage::disk('public')->delete($postingan->image);
+    //         //     }
+
+    //         //     $validatedData['image'] = $path;
+    //         // }
+
+    //         $postingan->update($validatedData);
+
+    //         return response()->json([
+    //             'message' => 'Postingan berhasil diperbarui',
+    //             'data' => $postingan->refresh(),
+    //         ]);
+    //     } catch (\Illuminate\Validation\ValidationException $e) {
+    //         return response()->json(['errors' => $e->errors()], 422);
+    //     }
+    // }
+
     public function update(Request $request, $id)
     {
-        $postingan = PostinganRelation::find($id);
-
-        if (!$postingan) {
-            return response()->json(['message' => 'Postingan tidak ditemukan'], 404);
-        }
+        // Validasi input
+        $validatedData = $request->validate([
+            'kontenPostingan' => 'required|string|max:1000',
+        ]);
 
         try {
-            $validatedData = $request->validate([
-                'kontenPostingan' => 'nullable|string',
-                'likes' => 'nullable|integer',
-                'comments' => 'nullable|integer',
-                'image' => 'nullable|string|max:2048',
-                'username' => 'nullable|string|max:2048',
-            ]);
+            // Cari postingan berdasarkan ID
+            $postingan = PostinganRelation::findOrFail($id);
 
-            // if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            //     $path = $request->file('image')->store('post-images', 'public');
+            // Update konten postingan
+            $postingan->kontenPostingan = $validatedData['kontenPostingan'];
+            $postingan->save();
 
-            //     if ($postingan->image) {
-            //         \Storage::disk('public')->delete($postingan->image);
-            //     }
-
-            //     $validatedData['image'] = $path;
-            // }
-
-            $postingan->update($validatedData);
-
+            // Response sukses
             return response()->json([
-                'message' => 'Postingan berhasil diperbarui',
-                'data' => $postingan->refresh(),
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(['errors' => $e->errors()], 422);
+                'message' => 'Postingan berhasil diperbarui.',
+                'data' => $postingan
+            ], 200);
+        } catch (\Exception $e) {
+            // Response jika terjadi error
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat memperbarui postingan.',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 
@@ -124,15 +154,24 @@ class PostinganRelationController extends Controller
      */
     public function destroy($id)
     {
+        // Cari postingan berdasarkan ID
         $postingan = PostinganRelation::find($id);
 
+        // Jika postingan tidak ditemukan, kembalikan respons 404
         if (!$postingan) {
             return response()->json(['message' => 'Postingan tidak ditemukan'], 404);
         }
 
+        // Hapus gambar jika ada
+        if ($postingan->image) {
+            Storage::delete('public/' . $postingan->image);
+        }
+
+        // Hapus postingan dari database
         $postingan->delete();
 
-        return response()->json(['message' => 'Postingan berhasil dihapus']);
+        // Kembalikan respons sukses
+        return response()->json(['message' => 'Postingan berhasil dihapus'], 200);
     }
 
     /**
