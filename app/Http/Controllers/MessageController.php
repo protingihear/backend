@@ -9,10 +9,19 @@ use App\Models\Chat;
 
 class MessageController extends Controller
 {
-    public function index($chatId)
-    {
-        return Message::where('chat_id', $chatId)->get();
+    public function index(Request $request)
+{
+    $chatId = $request->query('chat_id');
+
+    if (!$chatId) {
+        return response()->json([
+            'error' => 'chat_id parameter is required'
+        ], 400);
     }
+
+    // Mengambil pesan berdasarkan chat_id
+    return Message::where('chat_id', $chatId)->get();
+}
 
     public function store(Request $request)
     {
