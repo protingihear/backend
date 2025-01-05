@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "D:/Ngoding/WEBPRO/coba"
+		},
+		{
+			"path": "D:/Ngoding/WEBPRO/TUBES_IHEAR/webihear"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "coba"
+	}
+}

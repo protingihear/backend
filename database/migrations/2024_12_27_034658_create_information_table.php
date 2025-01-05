@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    //1. tambah tabel image disini
+
     public function up(): void
     {
         Schema::create('information', function (Blueprint $table) {
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->time('upload_time')->nullable();
             $table->string('title');
             $table->text('content');
-            $table->string('image')->nullable(); // Kolom untuk menyimpan nama atau path gambar
+            $table->string('image')->nullable(); 
             $table->timestamps();
         });
     }

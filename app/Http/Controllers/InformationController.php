@@ -13,7 +13,6 @@ class InformationController extends Controller
         return response()->json($information);
     }
 
-    //2. nanti nambahhin di sini buat imagenya
     public function store(Request $request)
     {
         // dd($request);
@@ -29,7 +28,7 @@ class InformationController extends Controller
 
         
         
-        // Jika ada file gambar, simpan ke direktori dan ambil nama file
+        // Jika ada file gambar, disimpan dan ambil nama file
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
             
@@ -37,8 +36,15 @@ class InformationController extends Controller
         }
 
         // Simpan data ke database
-        $information = Information::create($validated);
+        $information = Information::find($request->input('title'));
 
+        if ($information) {
+            // Update data yang sudah ada
+            $information->update($validated);
+        } else {
+            // Jika tidak ada, buat data baru
+            $information = Information::create($validated);
+        }
         return response()->json($information, 201);
     }
 
@@ -57,7 +63,7 @@ class InformationController extends Controller
             'upload_time' => 'nullable|date_format:H:i:s',
             'title' => 'required|string',
             'content' => 'required|string',
-            'image' => 'nullable|file|image|mimes:jpeg,png,jpg|max:10240', // Validasi gambar
+            'image' => 'nullable|file|image|mimes:jpeg,png,jpg|max:10240',
         ]);
 
         if ($request->hasFile('image')) {
@@ -65,7 +71,6 @@ class InformationController extends Controller
             $validated['image'] = $imagePath;
         }
 
-        // Update data
         $information->update($validated);
 
         return response()->json($information);
