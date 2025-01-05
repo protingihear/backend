@@ -37,6 +37,7 @@ Route::get('/transkrip/nomer/{nomer}', [TranskripController::class, 'searchByNom
     Route::get('/auth', [TemanTuliController::class, 'authenticate']);
 
     Route::post('/teman-tuli/{id}/update', [TemanTuliController::class, 'update']);
+    Route::post('/put_information/{id}/update', [InformationController::class, 'update']);
     // Route::post('/postingan/{id}/like', [PostinganRelationController::class, 'likePost']);
     // Route::post('/postingan/{id}/like', [PostinganRelationController::class, 'toggleLike']);
     Route::post('/postingan/toggle-like/{id}', [PostinganRelationController::class, 'toggleLike']);
