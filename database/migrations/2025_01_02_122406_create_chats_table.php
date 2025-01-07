@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->string('username');
+            $table->string('username')->nullable();
             $table->unsignedBigInteger('user1_id'); // ID pengguna pertama
             $table->unsignedBigInteger('user2_id'); // ID pengguna kedua
             $table->timestamps(); // created_at & updated_at
